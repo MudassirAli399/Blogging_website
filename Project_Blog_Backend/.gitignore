@@ -1,0 +1,29 @@
+# Environment variables
+
+.env
+
+# Composer dependencies
+
+/vendor/
+
+# Logs
+
+*.log
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# IDE files
+
+.vscode/
+.idea/
+
+# XAMPP temp files
+
+tmp/
+
+# Node modules (if using frontend tools)
+
+node_modules/

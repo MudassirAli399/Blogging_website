@@ -1,0 +1,126 @@
+#labelforaccount {
+  color: #4a4a4a;
+  font-size: 16px; 
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  display: block; 
+  margin-bottom: 8px; 
+  font-weight: 500; 
+}
+
+.inputforaccount {
+  width: 100%;
+  padding: 12px 15px; 
+  border-radius: 8px; 
+  border: 1px solid #dddddd;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  color: #333333;
+  transition: all 0.3s ease;
+  box-sizing: border-box; 
+}
+
+.inputforaccount::placeholder {
+  font-size: 15px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  color: #a0a0a0;
+  padding: 0; 
+}
+
+.inputforaccount:hover {
+  border: 1px solid #a0a0a0; 
+}
+
+.inputforaccount:focus {
+  outline: none;
+  border-color: #FAA0A0; 
+  box-shadow: 0 0 0 3px #f1e6e6; 
+  background-color: #ffffff; 
+  padding: 12px 15px; 
+  color: #333333; 
+}
+
+.inputforposttitle{
+  width: 300px; 
+  padding: 12px 15px; 
+  border-radius: 8px; 
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: #333333;
+  transition: all 0.3s ease;
+  overflow-x: auto;
+  resize: none;
+  margin-left: 2%;
+}
+
+.inputforposttitle::placeholder {
+  font-size: 15px;
+  font-weight: 200;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  color: #a0a0a0;
+  padding: 0; 
+}
+
+.inputforposttitle:hover {
+  border: 1px solid #a0a0a0; 
+}
+.inputforposttitle:focus {
+  outline: none;
+  border-color: rgb(54, 248, 54); 
+  box-shadow: 0 0 0 3px rgb(54, 248, 54); 
+  background-color: #ffffff; 
+  padding: 12px 15px; 
+  color: #333333; 
+}
+.inputforpostsummary{
+  width: 600px; 
+  padding: 12px 15px; 
+  border-radius: 8px; 
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  transition: all 0.3s ease;
+   
+  margin-left: 2%;
+}
+
+.inputforpostsummary::placeholder {
+  font-size: 15px;
+  font-weight: 200;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  color: #a0a0a0;
+  padding: 0; 
+}
+
+.inputforpostsummary:hover {
+  border: 1px solid #a0a0a0; 
+}
+.inputforpostsummary:focus {
+  outline: none;
+  border-color: rgb(54, 248, 54); 
+  box-shadow: 0 0 0 3px rgb(54, 248, 54); 
+  background-color: #ffffff; 
+  padding: 12px 15px; 
+  color: #333333; 
+}
+.inputforpostimage{
+  margin-left: 2%;
+  margin-top: 2%;
+}
+#labelforpost {
+  color: #4a4a4a;
+  font-size: 30px; 
+  font-family:Arial;
+  
+  margin-left: 5%; 
+  font-weight: 500; 
+}
+#divforpost{
+  margin-top: 2%;
+}
