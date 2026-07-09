@@ -72,6 +72,8 @@ export default function AddPostForm({
 
         console.log("formdata that will send to backend:-- ",formData.entries());
 
+        console.log(data.userImage[0].name)
+
         console.log("State :-- ",BlogValue)
         const res = await fetch(URL, {
             method: "POST",
