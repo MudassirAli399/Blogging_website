@@ -51,24 +51,31 @@ const Slice = createSlice({
             state.BlogPost.date=action.payload.Date
 
         },
-        UpdateSearchData : (state,action) => {
-            action.payload.IsUserSearch ? (state.Search.IsUserSearch = action.payload.IsUserSearch) : (state.Search.IsUserSearch = state.Search.IsUserSearch)
-            // state.Search.IsUserSearch = action.payload.IsUserSearch
-            action.payload.IsContentfind ? (state.Search.IsContentfind = action.payload.IsContentfind) : (state.Search.IsContentfind = state.Search.IsContentfind)
-            // state.Search.IsContentfind = action.payload.IsContentfind
-            action.payload.increment ? (state.Search.ClickOnLoadMore = action.payload.increment) : (state.Search.ClickOnLoadMore = state.Search.ClickOnLoadMore)
-            action.payload.incrementsearch ? (state.Search.ClickOnSearch = state.Search.ClickOnSearch + 1) : (state.Search.ClickOnSearch = state.Search.ClickOnSearch)
+        UpdateSearchData: (state, action) => {
+    state.Search.IsUserSearch =
+        action.payload.IsUserSearch ?? state.Search.IsUserSearch;
 
-            // if(action.payload.increment){
-            //     state.Search.ClickOnLoadMore = state.Search.ClickOnLoadMore + 1
-            // }
-            // if(action.payload.incrementsearch){
-            //     state.Search.ClickOnSearch = state.Search.ClickOnSearch + 1
-            // }
-        },
-        DataOfSearchingPost : (state,action) => {
-            state.DataOfSearchingPost = action.payload
-        }
+    state.Search.IsContentfind =
+        action.payload.IsContentfind ?? state.Search.IsContentfind;
+
+    state.Search.ClickOnLoadMore =
+        action.payload.increment ?? state.Search.ClickOnLoadMore;
+
+    state.Search.ClickOnSearch =
+        action.payload.incrementsearch != null
+            ? state.Search.ClickOnSearch + 1
+            : state.Search.ClickOnSearch;
+},
+        DataOfSearchingPost: (state, action) => {
+                    if(action.payload.firsttime){
+                        state.DataOfSearchingPost = action.payload.data
+                    }
+                    else {
+                    state.DataOfSearchingPost = [
+                        ...state.DataOfSearchingPost,
+                        ...action.payload.data
+                    ];}
+                }
     }
 })
 

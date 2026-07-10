@@ -9,23 +9,27 @@ import SearchPost from "../Backend/Search";
 export default function Search({
     Blogs = []
 }) {
-    const [showingdata, setshowingdata] = React.useState([]);
+    // const [showingdata, setshowingdata] = React.useState([]);
     const dispatch = useDispatch();
-    const DataOfSearchingPost = useSelector((state) => state.user.DataOfSearchingPost);
+    const loader = useSelector((state) => state.user.Authentication.loader);
+    const Posts = useSelector((state) => state.user.DataOfSearchingPost);
     const IsSearch = useSelector((state) => state.user.Search.IsUserSearch);
     const IsContentFind = useSelector((state) => state.user.Search.IsContentfind);
     const id = useSelector((state) => state.user.Authentication.id);
     const LoadMore = useSelector((state) => state.user.Search.ClickOnLoadMore);
-    React.useEffect(() => {
-        setshowingdata(DataOfSearchingPost)
-    },[DataOfSearchingPost])
+    // React.useEffect(() => {
+    //     setshowingdata(DataOfSearchingPost)
+    // },[DataOfSearchingPost])
+    // FOr first time
+    // LoadMore = LoadMore + 1
     const search = async () => {
+        dispatch(login({loader:true}))
         dispatch(UpdateSearchData({ IsUserSearch: true }));
         console.log("LoadMore will send at loadmore time:-- ",LoadMore);
 
      
         const response = await SearchPost({
-          title: DataOfSearchingPost[0].TITLE,
+          title: Posts[0].TITLE,
           IncrementNumber: LoadMore
         });
     
@@ -35,24 +39,27 @@ export default function Search({
             increment: LoadMore + 1,
             IsContentfind: true
           }));
-          dispatch(DataOfSearchingPost(response));
+          dispatch(DataOfSearchingPost({data:response}))
+          dispatch(login({loader:false}))
         } else {
-        document.getElementById("loadmore").remove()
+        // document.getElementById("loadmore").remove()
            console.log("error"); 
           dispatch(UpdateSearchData({
             increment: 0,
             IsContentfind: true
           }));
-          
+          dispatch(login({loader:false}));
         }
       };
   
     return (
         IsSearch ? (
-            IsContentFind ?( id ? (<div className="container" >
+            IsContentFind ?( id ? (
+            
+            <div className="container" >
       <div className="row" >
                 
-      { showingdata.length>0 && showingdata.map((post) => {
+      { Posts.length>0 && Posts.map((post) => {
         if(post.id == id){ return(
         
         <PostCard  image={`http://localhost/apicall/Project-Blog-Backend/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={true} Content={post.CONTENT} date={post.date} id={nanoid()} />
@@ -66,6 +73,7 @@ export default function Search({
         } )}
   
       </div>
+      {loader && (<h1>Loading</h1>)}
       
       {LoadMore > 0 && (
         <button onClick={search} id="loadmore">Load More</button>
@@ -73,7 +81,12 @@ export default function Search({
      
    </div>) : (<h1>You are not logged in</h1>) ): (id ? (<h1>Loading</h1>) : (<h1>You are not logged in</h1>))
 
-        ) : (<h1>You cannot visit this page directly.Please go to Search bar in header and search by title</h1>)
+        ) 
+        :
+        
+        (
+        <h1>You cannot visit this page directly.Please go to Search bar in header and search by title</h1>
+      )
 
     )
 }

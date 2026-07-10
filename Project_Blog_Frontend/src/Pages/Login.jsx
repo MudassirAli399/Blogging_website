@@ -16,6 +16,8 @@ export default function Login() {
 
   const { register, handleSubmit} = useForm();
 
+  const loader = useSelector((state) => state.user.Authentication.loader);
+
   useEffect(() => {
     if (state.Authentication.status === true && state.Authentication.email) {
         alert("You are logged in");
@@ -25,6 +27,7 @@ export default function Login() {
   
 
   const Login = async (data) => {
+    Dispatch(login({loader:true}))
     console.log("State Before Login:-- ",state)
     console.log("Data for login:-- ",data);
     if(data && data.userEmail!=state.Authentication.email){
@@ -39,14 +42,18 @@ export default function Login() {
     console.log("data comes from backend for login:-- ",Logindata.user);
     Dispatch(login({id:Logindata.user.id, status:true,email:Logindata.user.EMAIL,username:Logindata.user.NAME}));
     console.log("state after getting data from backend:-- ",state);
+    Dispatch(login({loader:false}))
    }
    else{
     Dispatch(login({status:false,email:"",username:""}));
     console.log(Logindata);
+    Dispatch(login({loader:false}))
+
     
    }
   }
   else{
+    Dispatch(login({loader:false}))
     alert("You are already logged in");
   }
   }
@@ -55,7 +62,9 @@ export default function Login() {
 
   return (
     <>
-      <div
+    {
+      loader ? (<div>Loading</div>):(
+  <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -153,6 +162,9 @@ export default function Login() {
           </div>
         </div>
       </div>
+      )
+    }
+    
     </>
   );
 }

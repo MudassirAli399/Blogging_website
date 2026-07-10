@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateblogpost,UpdateSearchData,logout,DataOfSearchingPost } from "../store/Slice";
+import { updateblogpost,UpdateSearchData,logout,DataOfSearchingPost,login } from "../store/Slice";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SearchPost from "../Backend/Search.js";
@@ -42,36 +42,68 @@ export default function Header() {
     alignItems: "center",
     gap: "6px",
   });
-  React.useEffect(() => {
-  if (!SearchText) return; // empty search avoid
+//   React.useEffect(() => {
+//   if (!SearchText) return; // empty search avoid
 
-  const search = async () => {
+//   const search = async () => {
+//     dispatch(UpdateSearchData({ IsUserSearch: true }));
+//     console.log(TextSearched);
+//     console.log("LoadMore will send at first time:-- ",LoadMore);
+
+//     const response = await SearchPost({
+//       title: SearchText,
+//       IncrementNumber: LoadMore
+//     });
+
+//     if (response) {
+//       console.log(response);
+//       dispatch(UpdateSearchData({
+//         increment: LoadMore + 1,
+//         IsContentfind: true
+//       }));
+//       dispatch(DataOfSearchingPost(response));
+//     } else {
+//       dispatch(UpdateSearchData({
+//         increment: false,
+//         IsContentfind: true
+//       }));
+//     }
+//   };
+
+//   search();
+// }, [TextSearched]);
+
+  const handlesumbit =  React.useCallback(async () => {
+    if (!SearchText) return; // empty search avoid
+    dispatch(login({loader:true}))
     dispatch(UpdateSearchData({ IsUserSearch: true }));
     console.log(TextSearched);
     console.log("LoadMore will send at first time:-- ",LoadMore);
 
     const response = await SearchPost({
       title: SearchText,
-      IncrementNumber: LoadMore
+      IncrementNumber: 0
     });
 
     if (response) {
       console.log(response);
       dispatch(UpdateSearchData({
-        increment: LoadMore + 1,
+        increment: 1 ,
         IsContentfind: true
       }));
-      dispatch(DataOfSearchingPost(response));
+      dispatch(login({loader:false}))
+      dispatch(DataOfSearchingPost({firsttime:true,data:response}));
     } else {
       dispatch(UpdateSearchData({
         increment: false,
         IsContentfind: true
       }));
     }
-  };
+    
+  }, [SearchText]);
+  
 
-  search();
-}, [TextSearched]);
+
 //   const search = React.useCallback(async () => {
 //   dispatch(UpdateSearchData({ IsUserSearch: true }));
 //     console.log(SearchText);
@@ -184,7 +216,11 @@ export default function Header() {
               setSearchText(e.target.value)
             }}
           />
-          <Link to="Search"><button onClick={()=>{if(TextSearched == SearchText) return; else setTextSearched(SearchText)}}
+          <Link to="Search"><button onClick={
+            handlesumbit
+            // ()=>{if(TextSearched == SearchText) return; else setTextSearched(SearchText)}
+          
+          }
             style={{ height: "40px", padding: "0 16px", borderRadius: "6px", border: "1px solid green", color: "green", backgroundColor: "white", cursor: "pointer" }}
             type="button"
           >

@@ -15,6 +15,7 @@ export default function  CreateAccount() {
 
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user.Authentication);
+  const loader = useSelector((state) => state.user.Authentication.loader);
 
   useEffect(() => {
     if (userState.status) {
@@ -25,6 +26,7 @@ export default function  CreateAccount() {
   }, [userState.email]);
 
   const create = async (data) => {
+      dispatch(login({loader:true}))
       if (data && data.userEmail!=userState.email) {
         const account = await MakeAccount({
           username: data.userName,
@@ -33,10 +35,14 @@ export default function  CreateAccount() {
         });
   
         if (account) {
+        dispatch(login({loader:false}))
+
           dispatch(login({ id: account.id, status:true,email:account.email,username:account.user }));
         }
       }
       else {
+        dispatch(login({loader:false}))
+
         alert("Account already exists");
       }
     }
@@ -46,8 +52,9 @@ export default function  CreateAccount() {
 
   return (
     <>
-    
-      <div style={{
+    {
+      loader ? (<div>Loading</div>) :(
+         <div style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -156,6 +163,10 @@ export default function  CreateAccount() {
           </div>
         </div>
       </div>
+      )
+    }
+    
+     
     </>
   );
   
