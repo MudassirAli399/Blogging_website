@@ -16,6 +16,7 @@ export default function Postdetails(){
   const id = useSelector((state) => state.user.Authentication.id);
 
   const loader = useSelector((state) => state.user.Authentication.loader);
+  const StartFetch = useSelector((state) => state.user.Authentication.StartFetch);
   
   
     React.useEffect(() => {
@@ -23,7 +24,7 @@ export default function Postdetails(){
     
     
     
-    if(id){
+    if(id && StartFetch){
       const data = async  () => {
 
         dispatch(login({loader:true}))
@@ -39,9 +40,10 @@ export default function Postdetails(){
           const data = await response.json();
           console.log("data from getting post:--" ,data);
           Setposts(data);
-          dispatch(login({loader:false}))
+          dispatch(login({loader:false,StartFetch:false}))
         }
         else{
+          dispatch(login({loader:false,StartFetch:false}))
           console.log("error");
           return false
         };

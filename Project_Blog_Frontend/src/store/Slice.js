@@ -23,7 +23,8 @@ const initialState = {
         status : false,
         username : "",
         email : ""},
-        loader : false
+        loader : false,
+        StartFetch : true
     }
 
 const Slice = createSlice({
@@ -35,6 +36,7 @@ const Slice = createSlice({
                 state.Authentication.status = action.payload.status ?? state.Authentication.status;
                 state.Authentication.username = action.payload.username ?? state.Authentication.username;
                 state.Authentication.email = action.payload.email ?? state.Authentication.email;
+                state.Authentication.StartFetch = action.payload.StartFetch ?? state.Authentication.StartFetch;
                 state.Authentication.loader = action.payload.loader ?? state.Authentication.loader;
             },
         logout : (state,action) => {
