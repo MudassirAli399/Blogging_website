@@ -58,7 +58,7 @@ export default function Postdetails(){
       
       
       
-    },[id])
+    },[id]);
     
     
     
@@ -67,7 +67,9 @@ export default function Postdetails(){
  
   {id? 
 
-  (loader ? (<center><h1>Loading...</h1></center>) : (<div className="container" >
+  (
+
+    <div className="container" >
       <div className="row" >
 
       {Posts && Posts.map((post) => {
@@ -79,7 +81,11 @@ export default function Postdetails(){
         } )}
   
       </div>
-   </div> ))
+      {loader && <center><h1>Loading...</h1></center>}
+   </div> 
+  )
+
+
   
     
  

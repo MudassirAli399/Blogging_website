@@ -23,10 +23,13 @@ const initialState = {
         id : "",
         status : false,
         username : "",
-        email : ""},
+        email : "",
         loader : false,
         StartFetch : true
+    },
+       
     }
+    
 
 const Slice = createSlice({
     name : "user",

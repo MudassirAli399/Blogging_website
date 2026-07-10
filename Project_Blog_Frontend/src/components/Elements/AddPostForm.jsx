@@ -84,6 +84,7 @@ export default function AddPostForm({
             if(result){
                 console.log("result from backend:-- ",result);
                 alert(result.message)
+                dispatch(login({StartFetch:true}))
                 dispatch(updateblogpost({title:"",Summary:"",Content:""}))
                 dispatch(login({loader:false}))
             }
