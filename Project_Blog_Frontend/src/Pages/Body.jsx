@@ -14,6 +14,8 @@ export default function Postdetails(){
 
  
   const id = useSelector((state) => state.user.Authentication.id);
+
+  const loader = useSelector((state) => state.user.Authentication.loader);
   
   
     React.useEffect(() => {
