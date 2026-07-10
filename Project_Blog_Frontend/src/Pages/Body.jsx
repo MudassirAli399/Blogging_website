@@ -8,7 +8,7 @@ export default function Postdetails(){
 
   
 
-  const posts = useSelector((state) => state.user.DataOfBlogs);
+  const Posts = useSelector((state) => state.user.DataOfBlogs);
 
   const dispatch = useDispatch();
 
