@@ -30,13 +30,13 @@ const Slice = createSlice({
     name : "user",
     initialState,
     reducers : {
-        login : (state,action) => {
-            state.Authentication.id = action.payload.id
-            state.Authentication.status = action.payload.status
-            state.Authentication.username = action.payload.username
-            state.Authentication.email = action.payload.email
-            state.Authentication.loader = action.payload.loader ?? state.Authentication.loader
-        },
+       login: (state, action) => {
+                state.Authentication.id = action.payload.id ?? state.Authentication.id;
+                state.Authentication.status = action.payload.status ?? state.Authentication.status;
+                state.Authentication.username = action.payload.username ?? state.Authentication.username;
+                state.Authentication.email = action.payload.email ?? state.Authentication.email;
+                state.Authentication.loader = action.payload.loader ?? state.Authentication.loader;
+            },
         logout : (state,action) => {
             state.Authentication.status = false
             state.Authentication.username = ""

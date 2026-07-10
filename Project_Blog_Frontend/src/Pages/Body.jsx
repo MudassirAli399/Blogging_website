@@ -64,7 +64,7 @@ export default function Postdetails(){
  
   {id? 
 
-  loader ? (<center><h1>Loading...</h1></center>) : (<div className="container" >
+  (loader ? (<center><h1>Loading...</h1></center>) : (<div className="container" >
       <div className="row" >
 
       {Posts && Posts.map((post) => {
@@ -76,12 +76,12 @@ export default function Postdetails(){
         } )}
   
       </div>
-   </div> )
+   </div> ))
   
     
  
   : 
-  <center><h1 style={{color:"red"}}>You are not logged in</h1></center>
+  (<center><h1 style={{color:"red"}}>You are not logged in</h1></center>)
   }
   
    </>
