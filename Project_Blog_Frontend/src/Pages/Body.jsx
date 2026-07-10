@@ -1,6 +1,6 @@
 import React from "react";
 import {useSelector,useDispatch} from "react-redux"
-import { login } from "../store/Slice.js";
+import { login,UpdateDataOfBlogs } from "../store/Slice.js";
 import PostCard from "../components/Elements/PostCard";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -8,7 +8,7 @@ export default function Postdetails(){
 
   
 
-  const [Posts,Setposts] = React.useState()
+  const posts = useSelector((state) => state.user.DataOfBlogs);
 
   const dispatch = useDispatch();
 
@@ -39,7 +39,8 @@ export default function Postdetails(){
         if (response.ok) {
           const data = await response.json();
           console.log("data from getting post:--" ,data);
-          Setposts(data);
+          dispatch(UpdateDataOfBlogs(data));
+          
           dispatch(login({loader:false,StartFetch:false}))
         }
         else{

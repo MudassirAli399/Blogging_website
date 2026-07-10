@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { act } from "react";
 
 const initialState = {
+    DataOfBlogs : [],
     DataOfSearchingPost : [],
     Search : {
         IsUserSearch : false,
@@ -77,9 +78,15 @@ const Slice = createSlice({
                         ...state.DataOfSearchingPost,
                         ...action.payload.data
                     ];}
-                }
+                },
+        UpdateDataOfBlogs : (state,action) => {
+            state.DataOfBlogs = [
+                ...state.DataOfBlogs,
+                ...action.payload
+            ]
+        }
     }
 })
 
-export const {login,logout,updateblogpost,UpdateSearchData,DataOfSearchingPost} = Slice.actions
+export const {login,logout,updateblogpost,UpdateSearchData,DataOfSearchingPost,UpdateDataOfBlogs} = Slice.actions
 export default Slice.reducer
