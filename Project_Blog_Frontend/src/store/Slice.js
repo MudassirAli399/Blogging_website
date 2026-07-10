@@ -22,7 +22,8 @@ const initialState = {
         id : "",
         status : false,
         username : "",
-        email : ""}
+        email : ""},
+        loader : false
     }
 
 const Slice = createSlice({
@@ -34,6 +35,7 @@ const Slice = createSlice({
             state.Authentication.status = action.payload.status
             state.Authentication.username = action.payload.username
             state.Authentication.email = action.payload.email
+            state.Authentication.loader = action.payload.loader ?? state.Authentication.loader
         },
         logout : (state,action) => {
             state.Authentication.status = false

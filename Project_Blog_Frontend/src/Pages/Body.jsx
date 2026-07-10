@@ -1,5 +1,6 @@
 import React from "react";
 import {useSelector,useDispatch} from "react-redux"
+import { login } from "../store/Slice.js";
 import PostCard from "../components/Elements/PostCard";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -9,7 +10,7 @@ export default function Postdetails(){
 
   const [Posts,Setposts] = React.useState()
 
-  
+  const dispatch = useDispatch();
 
  
   const id = useSelector((state) => state.user.Authentication.id);
@@ -23,6 +24,9 @@ export default function Postdetails(){
     if(id){
       const data = async  () => {
 
+        dispatch(login({loader:true}))
+
+
         const response = await fetch(import.meta.env.VITE_GET_POST, {
           method: "GET",
           
@@ -33,6 +37,7 @@ export default function Postdetails(){
           const data = await response.json();
           console.log("data from getting post:--" ,data);
           Setposts(data);
+          dispatch(login({loader:false}))
         }
         else{
           console.log("error");
@@ -56,8 +61,8 @@ export default function Postdetails(){
   <>
  
   {id? 
-  
-<div className="container" >
+
+  loader ? (<center><h1>Loading...</h1></center>) : (<div className="container" >
       <div className="row" >
 
       {Posts && Posts.map((post) => {
@@ -69,7 +74,9 @@ export default function Postdetails(){
         } )}
   
       </div>
-   </div>     
+   </div> )
+  
+    
  
   : 
   <center><h1 style={{color:"red"}}>You are not logged in</h1></center>

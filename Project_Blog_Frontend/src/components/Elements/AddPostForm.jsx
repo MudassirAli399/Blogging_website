@@ -1,7 +1,7 @@
 import React, { use } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector,useDispatch } from "react-redux";
-import { updateblogpost } from "../../store/Slice";
+import { updateblogpost,login } from "../../store/Slice";
 import Input from "./Input.jsx";
 import Button from "./Button.jsx";
 import { Controller } from "react-hook-form";
@@ -12,7 +12,7 @@ import RTE from "./RTE.jsx";
 export default function AddPostForm({
     URL=import.meta.env.VITE_ADD_POST
 }) {
-   
+   const loader = useSelector((state)=>state.user.Authentication.loader)
    const dispatch = useDispatch();
    const id = useSelector((state)=>state.user.Authentication.id)
 
@@ -51,6 +51,7 @@ export default function AddPostForm({
 
     
     const Submit = async (data) => {
+        dispatch(login({loader:true}))
         console.log("data for adding post:-- ",data);
         const date = new Date()
         console.log(date)
@@ -84,13 +85,15 @@ export default function AddPostForm({
                 console.log("result from backend:-- ",result);
                 alert(result.message)
                 dispatch(updateblogpost({title:"",Summary:"",Content:""}))
+                dispatch(login({loader:false}))
             }
              
     }
     return (
         <>
+        {loader? (<div>Loading</div>) : (
 
-        <div style={{margin:"50px"}}>
+ <div style={{margin:"50px"}}>
             <h1 style={{textAlign:"center"}}>Add Blog</h1>
             <form onSubmit={handleSubmit(Submit)}>
             
@@ -171,6 +174,9 @@ export default function AddPostForm({
             </form>   
 
         </div>
+        )}
+
+       
         
 
         
