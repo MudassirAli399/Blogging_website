@@ -83,10 +83,7 @@ const Slice = createSlice({
                     ];}
                 },
         UpdateDataOfBlogs : (state,action) => {
-            state.DataOfBlogs = [
-                ...state.DataOfBlogs,
-                ...action.payload
-            ]
+            state.DataOfBlogs = action.payload ?? state.DataOfBlogs
         }
     }
 })
