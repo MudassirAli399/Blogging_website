@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import PostCard from "../components/Elements/PostCard";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import {UpdateSearchData,DataOfSearchingPost} from "../store/Slice";
+import {UpdateSearchData,DataOfSearchingPost,login} from "../store/Slice";
 import SearchPost from "../Backend/Search";
 export default function Search({
     Blogs = []
