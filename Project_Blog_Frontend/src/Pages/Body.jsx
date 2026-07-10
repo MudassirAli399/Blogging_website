@@ -73,10 +73,10 @@ export default function Postdetails(){
       <div className="row" >
 
       {Posts && Posts.map((post) => {
-        if(post.id == id){return(<PostCard  image={`http://localhost/apicall/Project-Blog-Backend/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={true} Content={post.CONTENT} date={post.date} id={nanoid()} />)
+        if(post.id == id){return(<PostCard  image={`https://blogging-website.site/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={true} Content={post.CONTENT} date={post.date} id={nanoid()} />)
         }
         else{
-          return(<PostCard  image={`http://localhost/apicall/Project-Blog-Backend/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={false} Content={post.CONTENT} date={post.date} />)}
+          return(<PostCard  image={`https://blogging-website.site/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={false} Content={post.CONTENT} date={post.date} />)}
         
         } )}
   
