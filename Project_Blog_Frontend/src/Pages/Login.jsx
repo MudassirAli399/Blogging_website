@@ -4,6 +4,7 @@ import Button from "../components/Elements/Button.jsx";
 
 import { useForm } from "react-hook-form";
 import { useSelector , useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import LoginAccount from "../Backend/Loginaccount.js";
 import { login } from "../store/Slice.js";
@@ -155,9 +156,9 @@ export default function Login() {
               }}
             >
               Don't have an account?{" "}
-              <a href="/register" style={{ color: "#3f2b96", textDecoration: "none", fontWeight: "600" }}>
+              <Link to="/Signup" style={{ color: "#3f2b96", textDecoration: "none", fontWeight: "600" }}>
                 Create Account
-              </a>
+              </Link>
             </p>
           </div>
         </div>

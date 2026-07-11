@@ -4,6 +4,8 @@ import Button from "../components/Elements/Button.jsx";
 
 import MakeAccount from "../Backend/Createaccount.js"
 
+import { Link } from "react-router-dom";
+
 import {useForm} from "react-hook-form";
 
 import { useSelector,useDispatch } from "react-redux";
@@ -159,7 +161,7 @@ export default function  CreateAccount() {
               color: "#666666",
               fontSize: "14px",
               marginTop: "15px"
-            }}>Already have an account? <a href="/login" style={{ color: "#007BFF", textDecoration: "none" }}>Log in</a></p>
+            }}>Already have an account? <Link to="/Signin" style={{ color: "#007BFF", textDecoration: "none" }}>Log in</Link></p>
           </div>
         </div>
       </div>

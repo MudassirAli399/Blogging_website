@@ -68,7 +68,7 @@ export default function AddPostForm({
         formData.append("title", data.usertitle);
         formData.append("summary", data.userSummary);
         formData.append("content", data.content);
-        formData.append("image", data.userImage[0].name);
+        formData.append("image", data.userImage[0]);
         
 
         console.log("formdata that will send to backend:-- ",formData.entries());
