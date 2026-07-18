@@ -147,7 +147,7 @@ export default function AddPostForm({
             {errors.userImage && <p style={{ color: 'red',marginLeft:"20%" }}>{errors.userImage.message}</p>}
             <div style={{marginTop:"20px"}}>
            <Controller
-                
+            
                  name="content"
                  control={control}
                  rules={{ required: "Content is required" }}

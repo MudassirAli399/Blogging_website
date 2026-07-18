@@ -68,7 +68,7 @@ export default function Search({
         }
         else{
            
-          return(<PostCard  image={`http://localhost/apicall/Project-Blog-Backend/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={false} Content={post.CONTENT} date={post.date} />)}
+          return(<PostCard  image={`https://blogging-website.site/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={false} Content={post.CONTENT} date={post.date} />)}
         
         } )}
   
@@ -76,7 +76,7 @@ export default function Search({
       {loader && (<h1>Loading</h1>)}
       
       {LoadMore > 0 && (
-        <button onClick={search} id="loadmore">Load More</button>
+        <center> <button onClick={search} id="loadmore" style={{marginTop:"2%",borderRadius:"20px",height:"40px"}}>Load More</button></center>
       )}
      
    </div>) : (<h1>You are not logged in</h1>) ): (id ? (<h1>Loading</h1>) : (<h1>You are not logged in</h1>))

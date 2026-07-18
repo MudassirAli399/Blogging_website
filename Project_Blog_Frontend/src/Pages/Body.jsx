@@ -70,7 +70,7 @@ export default function Postdetails(){
   (
 
     <div className="container" >
-      <div className="row" >
+      <div className="row"  >
 
       {Posts && Posts.map((post) => {
         if(post.id == id){return(<PostCard  image={`https://blogging-website.site/${post.IMAGE}`} Title={post.TITLE} Summary={post.SUMMARY} button={true} Content={post.CONTENT} date={post.date} id={nanoid()} />)
