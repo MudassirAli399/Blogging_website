@@ -4,12 +4,12 @@ import { act } from "react";
 const initialState = {
     DataOfBlogs : [],
     DataOfSearchingPost : [],
-    Search : {
-        IsUserSearch : false,
+    Search: {
+        IsUserSearch: false,
         IsContentfind: false,
         ClickOnLoadMore: 0,
-        ClickOnSearch : -1
-        
+        ClickOnSearch: -1,
+        SearchTerm: ""
     },
     BlogPost : {
         date:"",
@@ -57,7 +57,7 @@ const Slice = createSlice({
             state.BlogPost.date=action.payload.Date
 
         },
-        UpdateSearchData: (state, action) => {
+ UpdateSearchData: (state, action) => {
     state.Search.IsUserSearch =
         action.payload.IsUserSearch ?? state.Search.IsUserSearch;
 
@@ -71,6 +71,9 @@ const Slice = createSlice({
         action.payload.incrementsearch != null
             ? state.Search.ClickOnSearch + 1
             : state.Search.ClickOnSearch;
+
+    state.Search.SearchTerm =
+        action.payload.SearchTerm ?? state.Search.SearchTerm;
 },
         DataOfSearchingPost: (state, action) => {
                     if(action.payload.firsttime){

@@ -6,3 +6,29 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model blogdetails {
+  ID          Int    @id @default(autoincrement())
+  User_Id     Int
+  Frontend_Id String @db.VarChar(255)
+  TITLE       String @db.VarChar(256)
+  SUMMARY     String @db.VarChar(256)
+  CONTENT     String @db.VarChar(256)
+  IMAGE       String @db.MediumText
+  date        String @db.VarChar(255)
+}
+
+model createaccount {
+  id       Int    @id @default(autoincrement())
+  NAME     String @db.VarChar(256)
+  EMAIL    String @db.VarChar(256)
+  PASSWORD String @db.VarChar(256)
+}
+
+model test {
+  id       Int    @id @default(autoincrement())
+  NAME     String @db.VarChar(256)
+  EMAIL    String @db.VarChar(256)
+  PASSWORD String @db.VarChar(256)
+  IMAGE    String @db.VarChar(255)
+}

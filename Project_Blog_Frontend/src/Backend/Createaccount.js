@@ -1,35 +1,47 @@
 
-import React from "react"
+export default async function MakeAccount({
+    username = "",
+    password = "",
+    email = ""
+}) {
 
-import LoginAccount from "./Loginaccount.js"
+    if (!username || !password || !email) {
 
-export default  async  function MakeAccount({
-    username="",
-    password="",
-    email=""
-}){
+        throw new Error("All fields are required");
 
-    if(!username || !password || !email){
-        return false
     }
 
-    const response = await fetch(import.meta.env.VITE_CREATE_ACCOUNT,{
-        method:"POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          email: email,
-        }),
-      });
-      const data = await response.json();
-      if(data.status=="success"){
-        return data
-      }
-      else{
-        return false
-      }
+    const response = await fetch(
+        import.meta.env.VITE_CREATE_ACCOUNT,
+        {
+            method: "POST",
+
+            credentials: "include",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                username,
+                password,
+                email
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    console.log("Create Account API Response:", data);
+
+    if (!response.ok || data.status !== "success") {
+
+        throw new Error(
+            data.message || "Account creation failed"
+        );
+
     }
+
+    return data;
+
+}
