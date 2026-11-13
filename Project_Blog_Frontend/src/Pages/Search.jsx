@@ -121,7 +121,7 @@ export default function Search() {
                                     <PostCard
                                         key={post.Frontend_Id}
                                         id={post.Frontend_Id}
-                                        image={`https://blogging-website.site/${post.IMAGE}`}
+                                        image={post.IMAGE}
                                         Title={post.TITLE}
                                         Summary={post.SUMMARY}
                                         button={isMyPost}

@@ -75,7 +75,7 @@ const CreateUser = asynchandler(async (req, res) => {
     status: "success",
     message: "Account created successfully",
     user: user.NAME,
-    id: String(user.ID),
+    id: String(user.id),
     email: user.EMAIL,
   });
 });

@@ -123,7 +123,7 @@ export default function Postdetails() {
                                 id={post.Frontend_Id}
 
                                 // Blog Image
-                                image={`http://localhost/apicall/Project-Blog-Backend/${post.IMAGE}`}
+                                image={post.IMAGE}
 
                                 // Blog Information
                                 Title={post.TITLE}

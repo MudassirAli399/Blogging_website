@@ -68,14 +68,34 @@ export default function AddPostForm({
                 .replace("T", " ");
 
             const formData = new FormData();
+            if(BlogValue.image){
+                formData.append("image", data.userImage[0]);
+                formData.append("imageforupdate", BlogValue.image);
+                formData.append("dateforupdate", BlogValue.date);
+                formData.append("title", data.usertitle.trim());
+                formData.append("summary", data.userSummary.trim());
+                formData.append("content", data.content);
+                formData.append("userid", id);
+                formData.append("Frontend-Id", crypto.randomUUID());
+                formData.append("date", date);
+            }
+            else{
+                formData.append("image", data.userImage[0]);
+                formData.append("title", data.usertitle.trim());
+                formData.append("summary", data.userSummary.trim());
+                formData.append("content", data.content);
+                formData.append("userid", id);
+                formData.append("Frontend-Id", crypto.randomUUID());
+                formData.append("date", date);
+            }
 
-            formData.append("userid", id);
-            formData.append("Frontend-Id", crypto.randomUUID());
-            formData.append("title", data.usertitle.trim());
-            formData.append("summary", data.userSummary.trim());
-            formData.append("content", data.content);
-            formData.append("date", date);
-            formData.append("image", data.userImage[0]);
+            // formData.append("userid", id);
+            // formData.append("Frontend-Id", crypto.randomUUID());
+            // formData.append("title", data.usertitle.trim());
+            // formData.append("summary", data.userSummary.trim());
+            // formData.append("content", data.content);
+            // formData.append("date", date);
+            // formData.append("image", data.userImage[0]);
 
             const res = await fetch(URL, {
                 method: "POST",

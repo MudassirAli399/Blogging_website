@@ -1,5 +1,5 @@
 import {Router} from "express"
-import {AddPost,Updatepost,Getpost} from "../Controllers/post.controller.js"
+import {AddPost,Updatepost,Getpost,Deletepost,Searchpost} from "../Controllers/post.controller.js"
 import UploadMiddleware from "../Middlewares/multer.middlware.js"
 
 const PostRouter = new Router()
@@ -7,8 +7,9 @@ const PostRouter = new Router()
 PostRouter
 .post("/add", UploadMiddleware, AddPost)
 .post("/update",UploadMiddleware, Updatepost)
-.post("/delete",()=>console.log("delete"))
+.post("/delete",Deletepost)
 .get("/get",Getpost)
-.post("/search",()=>console.log("search"))
+.post("/search",Searchpost)
+
 
 export default PostRouter

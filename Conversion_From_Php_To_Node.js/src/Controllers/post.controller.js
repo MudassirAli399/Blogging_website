@@ -14,7 +14,7 @@ const AddPost = asynchandler(async (req, res) => {
         "Frontend-Id": frontendId,
         date
     } = req.body;
-
+    console.log("Received FormData:", req.body);
     // 2. Receive Image from Multer
     const imageFile = req.file;
 
@@ -104,6 +104,7 @@ const AddPost = asynchandler(async (req, res) => {
 
 
 
+
 const Updatepost = asynchandler(async (req, res) => {
 
     // 1. Receive FormData fields
@@ -113,23 +114,27 @@ const Updatepost = asynchandler(async (req, res) => {
         content,
         userid,
         "Frontend-Id": frontendId,
-        date
+        date,
+        dateforupdate,
+        imageforupdate
     } = req.body;
 
-    // 2. Receive Image from Multer
+    // 2. Receive uploaded image
     const imageFile = req.file;
 
     console.log("Received FormData:", req.body);
     console.log("Received Image:", imageFile);
 
-    // 3. Validate Required Fields
+    // 3. Validate required fields
     if (
-        !title ||
-        !summary ||
-        !content ||
+        !title?.trim() ||
+        !summary?.trim() ||
+        !content?.trim() ||
         !userid ||
         !frontendId ||
-        !date
+        !date ||
+        !dateforupdate ||
+        !imageforupdate
     ) {
         return res.status(400).json({
             status: false,
@@ -147,10 +152,25 @@ const Updatepost = asynchandler(async (req, res) => {
         });
     }
 
-    // 5. Keep Existing Image URL
-    let imageUrl;
+    // 5. Search existing post using original values
+    const existingPost = await prisma.blogdetails.findFirst({
+        where: {
+            date: dateforupdate,
+            IMAGE: imageforupdate
+        }
+    });
 
-    // 6. Upload New Image Only If Provided
+    if (!existingPost) {
+        return res.status(404).json({
+            status: false,
+            message: "Post not found or original post data has changed"
+        });
+    }
+
+    // 6. Keep existing image if no new image is uploaded
+    let imageUrl = imageforupdate;
+
+    // 7. Upload new image only if provided
     if (imageFile) {
 
         const allowedTypes = [
@@ -185,38 +205,39 @@ const Updatepost = asynchandler(async (req, res) => {
         imageUrl = uploadImage.secure_url;
     }
 
-    // 7. Update Post in Database
-    console.log("Updating Post with User ID:", parsedUserId, "Frontend ID:", frontendId, "Date:", date);
+    // 8. Update post in database
     const updatedPost = await prisma.blogdetails.updateMany({
         where: {
-            User_Id: parsedUserId,
-            Frontend_Id: frontendId,
-            
+            date: dateforupdate,
+            IMAGE: imageforupdate
         },
         data: {
             TITLE: title.trim(),
             SUMMARY: summary.trim(),
             CONTENT: content,
-            ...(imageUrl && { IMAGE: imageUrl })
+            IMAGE: imageUrl,
+            date: date
         }
     });
 
-    // 8. Check Whether Post Exists
+    // 9. Check update result
     if (updatedPost.count === 0) {
         return res.status(404).json({
             status: false,
-            message: "Post not found"
+            message: "Post could not be updated"
         });
     }
 
-    // 9. Send Success Response
+    // 10. Success response
     return res.status(200).json({
         status: true,
         message: "Post updated successfully",
-        image: imageUrl
+        image: imageUrl,
+        date: date
     });
 
 });
+
 
 
 
@@ -237,4 +258,108 @@ const Getpost = asynchandler(async (req, res) => {
 });
 
 
-export { AddPost, Updatepost, Getpost };
+const Deletepost = asynchandler(async (req, res) => {
+
+    // 1. Receive data from frontend
+    const { Date  } = req.body;
+
+    
+
+    // 2. Validate required fields
+    if (!Date) {
+        return res.status(400).json({
+            status: false,
+            message: "All fields are required"
+        });
+    }
+
+    // 3. Validate User ID
+   
+
+   
+
+    // 4. Delete post from database
+    const deletedPost = await prisma.blogdetails.deleteMany({
+        where: {            
+            date: Date, 
+        }
+    });
+
+    // 5. Check whether post was deleted
+    if (deletedPost.count === 0) {
+        return res.status(404).json({
+            status: false,
+            message: "Post not found"
+        });
+    }
+
+    // 6. Success response
+    return res.status(200).json({
+        status: true,
+        message: "Post deleted successfully",
+        date: Date,
+        result: deletedPost.count
+    });
+
+});
+
+
+const Searchpost = asynchandler(async (req, res) => {
+
+    // 1. Receive JSON data from frontend
+    const {
+        TitleForSearch,
+        IncrementNumber = 0
+    } = req.body;
+
+    console.log("Search Request:", req.body);
+
+    // 2. Validate search title
+    const title = typeof TitleForSearch === "string"
+        ? TitleForSearch.trim()
+        : "";
+
+    if (title === "") {
+        return res.status(200).json([]);
+    }
+
+    // 3. Validate pagination number
+    const parsedIncrement = Number(IncrementNumber);
+
+    if (
+        (typeof IncrementNumber !== "number" &&
+         typeof IncrementNumber !== "string") ||
+        !Number.isSafeInteger(parsedIncrement) ||
+        parsedIncrement < 0
+    ) {
+        return res.status(400).json({
+            status: false,
+            message: "Invalid pagination number"
+        });
+    }
+
+    // 4. Calculate limit and offset
+    const Limit = 5;
+    const Offset = parsedIncrement * Limit;
+
+    // 5. Search posts using partial title matching
+    const posts = await prisma.blogdetails.findMany({
+        where: {
+            TITLE: {
+                contains: title
+            }
+        },
+        orderBy: {
+            ID: "desc"
+        },
+        skip: Offset,
+        take: Limit
+    });
+
+    // 6. Return matching posts
+    return res.status(200).json(posts);
+
+});
+
+
+export { AddPost, Updatepost, Getpost,Deletepost,Searchpost };

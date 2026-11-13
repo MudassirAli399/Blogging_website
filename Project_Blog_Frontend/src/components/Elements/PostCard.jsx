@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateblogpost } from "../../store/Slice";
+import { useDispatch,useSelector } from "react-redux";
+import { updateblogpost,login } from "../../store/Slice";
 import { NavLink } from "react-router-dom";
 import DeletePost from "../../Backend/DeletePost.js"
 
@@ -14,9 +14,11 @@ export default function PostCard({
   date
 }) {
   const dispatch = useDispatch();
+  const Authentication = useSelector((state) => state.user.Authentication);
   const [hovered, setHovered] = useState(false);
   const [deleteHovered, setDeleteHovered] = useState(false);
   const [editHovered, setEditHovered] = useState(false);
+  
 
   const updatestate = () => {
     dispatch(
@@ -32,7 +34,8 @@ export default function PostCard({
   const onDelete = async ()=>{
    const response = await DeletePost({Datefordelete : date})
    if(response && response.date==date){
-    document.getElementById(id).remove()
+      document.getElementById(id).style.display="none"
+      dispatch(login({StartFetch:true}))
       console.log(response.date)
    }
   }
